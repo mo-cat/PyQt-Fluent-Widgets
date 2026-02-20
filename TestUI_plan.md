@@ -539,3 +539,106 @@ search:
 - 实现用户登录和权限管理
 - 优化性能和用户体验
 - 添加更多功能模块
+
+## 14. Skill命名规范
+
+### 14.1 一级菜单Skill命名规则
+
+- 格式：`testui-<菜单路由>-page`
+- 示例：`testui-home-page`、`testui-api-test-page`等
+
+### 14.2 二级菜单Skill命名规则
+
+- 格式：`testui-<一级菜单路由>-<二级菜单名称>`
+- 示例：`testui-home-welcome`、`testui-api-test-modbus-rtu`等
+
+### 14.3 Skill目录结构
+
+所有Skill目录均位于 `.trae/skills/` 目录下，包括7个一级菜单Skill和26个二级菜单Skill，通过命名区分不同类型的Skill。
+
+### 14.4 命名规范文档
+
+详细的Skill命名规范请参考 `.trae/skills/SKILL_NAMING_SPEC.md` 文件。
+
+## 15. 提示词参考指南
+
+### 15.1 优先参考文件
+
+在后续的AI交互中，请优先参考以下文件：
+
+1. **TestUI_plan.md**：项目开发计划的核心文件，包含架构设计、菜单配置、页面路由、功能实现等详细规划
+2. **README.md**：项目说明文档，提供项目概述、架构设计、菜单配置、页面实现等内容
+3. **.trae/skills/** 目录下的相关Skill文件：每个页面的详细开发指南
+
+### 15.2 如何找到对应的Skill
+
+要找到对应的Skill文件进行AI执行，请按照以下步骤：
+
+1. **确定任务类型**：
+   - 如果是项目整体开发或架构相关任务，请使用 `testui-dev` Skill
+   - 如果是特定页面开发任务，请找到对应的页面Skill
+
+2. **一级菜单页面Skill查找**：
+   - 格式：`testui-<菜单路由>-page`
+   - 示例：首页页面使用 `testui-home-page` Skill
+
+3. **二级菜单页面Skill查找**：
+   - 格式：`testui-<一级菜单路由>-<二级菜单名称>`
+   - 示例：首页-欢迎页面使用 `testui-home-welcome` Skill
+
+4. **Skill文件位置**：
+   - 所有Skill文件均位于 `.trae/skills/` 目录下
+   - 每个Skill目录包含 `SKILL.md` 文件，定义了该Skill的具体内容和执行步骤
+
+### 15.3 构建项目的参考流程
+
+1. **项目初始化**：
+   - 参考 `README.md` 中的依赖管理部分，安装项目依赖
+   - 参考 `TestUI_plan.md` 中的目录结构部分，创建项目目录结构
+
+2. **架构搭建**：
+   - 参考 `TestUI_plan.md` 中的MVVM架构分层部分，实现各层组件
+   - 参考 `testui-dev` Skill，了解项目整体开发流程
+
+3. **页面开发**：
+   - 对于一级菜单页面，参考对应的 `testui-<菜单路由>-page` Skill
+   - 对于二级菜单页面，参考对应的 `testui-<一级菜单路由>-<二级菜单名称>` Skill
+
+4. **功能实现**：
+   - 参考 `TestUI_plan.md` 中的功能实现规划部分，实现各项功能
+   - 参考 `README.md` 中的技术栈部分，使用指定的技术和框架
+
+5. **测试与优化**：
+   - 参考 `TestUI_plan.md` 中的质量保证部分，进行功能测试和性能优化
+
+### 15.4 提示词示例
+
+**示例1：开发首页页面**
+```
+请根据TestUI项目的需求，开发首页页面。
+
+参考文件：
+- TestUI_plan.md：了解页面路由和功能需求
+- .trae/skills/testui-home-page/SKILL.md：首页页面的详细开发指南
+- README.md：了解项目整体架构和技术栈
+
+实现要求：
+- 使用qfluentwidgets组件库
+- 显示"首页页面+开发中"的提示
+- 介绍系统功能和首页子菜单内容
+```
+
+**示例2：开发连接管理-Modbus-rtu测试页面**
+```
+请根据TestUI项目的需求，开发连接管理-Modbus-rtu测试页面。
+
+参考文件：
+- TestUI_plan.md：了解页面路由和功能需求
+- .trae/skills/testui-api-test-modbus-rtu/SKILL.md：Modbus-rtu测试页面的详细开发指南
+- README.md：了解项目整体架构和技术栈
+
+实现要求：
+- 使用qfluentwidgets组件库
+- 显示"Modbus-rtu测试+开发中"的提示
+- 实现Modbus-rtu通信测试的基础界面
+```

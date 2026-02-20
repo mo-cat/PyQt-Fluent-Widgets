@@ -399,3 +399,19 @@ class MainViewModel:
 - 依赖注入容器实现，支持单例和工厂模式
 - 代码结构清晰，符合规范
 - 界面美观，交互流畅
+
+## Skill命名规范
+
+### 一级菜单Skill命名规则
+
+- 格式：`testui-<菜单路由>-page`
+- 示例：`testui-home-page`、`testui-api-test-page`等
+
+### 二级菜单Skill命名规则
+
+- 格式：`testui-<一级菜单路由>-<二级菜单名称>`
+- 示例：`testui-home-welcome`、`testui-api-test-modbus-rtu`等
+
+### Skill目录结构
+
+所有Skill目录均位于 `.trae/skills/` 目录下，包括7个一级菜单Skill和26个二级菜单Skill，通过命名区分不同类型的Skill。

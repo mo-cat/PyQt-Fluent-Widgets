@@ -1,12 +1,26 @@
-# TestUI 项目说明
+---
+name: "testui-dev"
+description: "提供TestUI项目的完整开发指南，包括架构设计、菜单配置、页面路由、功能实现等。当需要开发或维护TestUI项目时调用。"
+---
 
-## 项目概述
+# TestUI开发指南
 
-TestUI是一个基于PySide6和qfluentwidgets组件库开发的桌面端测试应用，采用MVVM架构设计，旨在提供一个功能完整、界面美观、交互流畅的测试管理系统。
+## 1. 项目概述
 
-## 架构设计
+### 1.1 项目目标
+基于指定参考文件（menu.md、examples/window 示例），创建名为TestUI的项目，采用MVVM架构实现桌面端UI开发，需满足分层解耦、功能扩展、界面定制三大核心要求。
 
-### MVVM架构分层
+### 1.2 项目范围
+- 搭建完整的MVVM架构框架
+- 实现主菜单与子菜单的展示
+- 开发基础页面路由系统
+- 实现搜索、主题调节、用户信息等扩展功能
+- 集成YAML配置文件管理
+- 实现依赖注入容器
+
+## 2. 架构规划
+
+### 2.1 MVVM架构分层
 
 | 层级 | 职责 | 实现方式 |
 |------|------|----------|
@@ -15,7 +29,7 @@ TestUI是一个基于PySide6和qfluentwidgets组件库开发的桌面端测试�
 | **Model/Service层** | 负责数据处理（配置读取、用户信息获取） | 自定义服务类，处理数据操作 |
 | **Infra层** | 封装通用能力（配置解析、主题管理、依赖注入） | 工具类和辅助模块，包括依赖注入容器 |
 
-### 目录结构
+### 2.2 目录结构
 
 ```
 TestUI/
@@ -102,9 +116,15 @@ TestUI/
 └── requirements.txt         # 依赖管理
 ```
 
-## 菜单配置
+### 2.3 代码规范
+- 禁止将所有逻辑写入单个文件，按功能模块拆分
+- 组件间通过信号槽/接口通信，避免直接依赖
+- 遵循Python PEP8代码规范
+- 采用类型注解提高代码可读性
 
-### 主菜单
+## 3. 菜单与图标规划
+
+### 3.1 主菜单配置
 
 | 菜单名称 | 图标文件 | 路由地址 | 显示位置 | 功能说明 |
 |---------|---------|---------|---------|--------|
@@ -116,65 +136,70 @@ TestUI/
 | 系统设置 | icon_settings.svg | system_settings | 顶部 | 系统参数配置、用户管理、日志查看 |
 | 帮助文档 | icon_info.svg | help_docs | 底部 | 帮助文档 |
 
-### 子菜单
+### 3.2 子菜单配置
 
 #### 首页子菜单
-| 菜单名称 | 功能说明 | 页面文件 |
-|---------|---------|----------|
-| 欢迎页面 | 系统启动时的首页 | welcome_page.py |
-| 用户管理 | 用户账户管理 | user_management_page.py |
-| 项目管理 | 项目信息管理 | project_management_page.py |
+| 菜单名称 | 图标文件 | 功能说明 |
+|---------|---------|--------|
+| 欢迎页面 |  | 系统启动时的首页 |
+| 用户管理 |  | 用户账户管理 |
+| 项目管理 |  | 项目信息管理 |
 
 #### 连接管理子菜单
-| 菜单名称 | 功能说明 | 页面文件 |
-|---------|---------|----------|
-| Modbus-rtu测试 | Modbus-rtu通信测试 | modbus_rtu_test_page.py |
-| API测试 | 应用程序接口测试 | api_test_page.py |
-| MQTT测试 | MQTT消息队列测试 | mqtt_test_page.py |
+| 菜单名称 | 图标文件 | 功能说明 |
+|---------|---------|--------|
+| Modbus-rtu测试 |  | Modbus-rtu通信测试 |
+| API测试 |  | 应用程序接口测试 |
+| MQTT测试 |  | MQTT消息队列测试 |
 
 #### 单板阶段子菜单
-| 菜单名称 | 功能说明 | 页面文件 |
-|---------|---------|----------|
-| 电机驱动板烧录 | 电机驱动板固件烧录 | motor_driver_burn_page.py |
-| 电机驱动板测试 | 电机驱动板功能测试 | motor_driver_test_page.py |
-| LED&按键板功能测试 | LED指示灯和按键功能测试 | led_key_test_page.py |
-| 电机来料测试 | 电机原材料质量检测 | motor_incoming_test_page.py |
-| 四手指功能测试 | 四指机械手功能测试 | four_finger_test_page.py |
-| 单拇指功能测试 | 单拇指机械手功能测试 | single_thumb_test_page.py |
+| 菜单名称 | 图标文件 | 功能说明 |
+|---------|---------|--------|
+| 电机驱动板烧录 |  | 电机驱动板固件烧录 |
+| 电机驱动板测试 |  | 电机驱动板功能测试 |
+| LED&按键板功能测试 |  | LED指示灯和按键功能测试 |
+| 电机来料测试 |  | 电机原材料质量检测 |
+| 四手指功能测试 |  | 四指机械手功能测试 |
+| 单拇指功能测试 |  | 单拇指机械手功能测试 |
 
 #### 组装阶段子菜单
-| 菜单名称 | 功能说明 | 页面文件 |
-|---------|---------|----------|
-| 半成品测试 | 产品半成品质量检测 | semi_finished_test_page.py |
-| 老化测试 | 产品长时间稳定性测试 | aging_test_page.py |
-| 整机测试 | 完整产品功能测试 | whole_machine_test_page.py |
-| OTA升级 | 无线固件升级测试 | ota_upgrade_page.py |
-| 整机出货检测 | 出货前最终质量检测 | whole_machine_shipment_test_page.py |
+| 菜单名称 | 图标文件 | 功能说明 |
+|---------|---------|--------|
+| 半成品测试 |  | 产品半成品质量检测 |
+| 老化测试 |  | 产品长时间稳定性测试 |
+| 整机测试 |  | 完整产品功能测试 |
+| OTA升级 |  | 无线固件升级测试 |
+| 整机出货检测 |  | 出货前最终质量检测 |
 
 #### 统计报告子菜单
-| 菜单名称 | 功能说明 | 页面文件 |
-|---------|---------|----------|
-| 生产统计 | 生产数据统计分析 | production_statistics_page.py |
-| 不良分析- | 产品质量不良分析 | defect_analysis_page.py |
-| 报表导出 | 测试数据报表导出 | report_export_page.py |
+| 菜单名称 | 图标文件 | 功能说明 |
+|---------|---------|--------|
+| 生产统计 |  | 生产数据统计分析 |
+| 不良分析- |  | 产品质量不良分析 |
+| 报表导出 |  | 测试数据报表导出 |
 
 #### 系统设置子菜单
-| 菜单名称 | 功能说明 | 页面文件 |
-|---------|---------|----------|
-| 测试参数配置 | 测试参数配置 | test_parameter_config_page.py |
-| 用户管理 | 用户账户管理 | user_management_page.py |
-| 系统日志 | 系统运行日志 | system_log_page.py |
+| 菜单名称 | 图标文件 | 功能说明 |
+|---------|---------|--------|
+| 测试参数配置 | - | 测试参数配置 |
+| 用户管理 | - | 用户账户管理 |
+| 系统日志 | - | 系统运行日志 |
 
 #### 帮助文档子菜单
-| 菜单名称 | 功能说明 | 页面文件 |
-|---------|---------|----------|
-| 测试指南 | 测试操作指南 | test_guide_page.py |
-| 故障排除 | 常见故障排除 | troubleshooting_page.py |
-| 系统更新 | 系统版本更新 | system_update_page.py |
+| 菜单名称 | 图标文件 | 功能说明 |
+|---------|---------|--------|
+| 测试指南 | - | 测试操作指南 |
+| 故障排除 | - | 常见故障排除 |
+| 系统更新 | - | 系统版本更新 |
 
-## 页面路由
+### 3.3 图标管理
+- 图标文件统一存放在 `res/icons/` 目录
+- 缺失图标参考 `res` 目录补充
+- 使用 `QIcon` 加载和管理图标
 
-### 一级菜单路由
+## 4. 页面路由规划
+
+### 4.1 一级菜单路由映射
 
 | 路由地址 | 页面组件 | 功能说明 |
 |---------|---------|--------|
@@ -186,20 +211,30 @@ TestUI/
 | system_settings | SystemSettingsPage | 系统设置页面 - 介绍系统设置功能，列出测试参数配置、用户管理、系统日志等子菜单内容 |
 | help_docs | HelpDocsPage | 帮助文档页面 - 介绍帮助文档功能，列出测试指南、故障排除、系统更新等子菜单内容 |
 
-### 二级菜单路由
+### 4.2 二级菜单路由映射
+- 首页子菜单：欢迎页面、用户管理、项目管理
+- 连接管理子菜单：Modbus-rtu测试、API测试、MQTT测试
+- 单板阶段子菜单：电机驱动板烧录、电机驱动板测试、LED&按键板功能测试、电机来料测试、四手指功能测试、单拇指功能测试
+- 组装阶段子菜单：半成品测试、老化测试、整机测试、OTA升级、整机出货检测
+- 统计报告子菜单：生产统计、不良分析-、报表导出
+- 系统设置子菜单：测试参数配置、用户管理、系统日志
+- 帮助文档子菜单：测试指南、故障排除、系统更新
 
-所有二级菜单页面都有对应的路由和页面实现，页面文件名称已在子菜单配置中列出。
+### 4.3 路由实现
+- 采用ViewModel层管理路由状态
+- 使用信号槽机制实现菜单切换与页面更新
+- 所有页面默认显示"[页面名称]+开发中"占位提示
+- 一级和二级菜单都有对应的界面实现
 
-## 功能实现
+## 5. 功能实现规划
 
-### 基础界面
-
+### 5.1 基础界面
 - 参考 examples 里的 window 示例搭建整体窗口框架
 - 使用 qfluentwidgets 组件库实现所有UI组件
 - 实现主菜单与子菜单的层级展示
 - 添加导航栏和状态栏
 
-### 扩展功能
+### 5.2 扩展功能
 
 | 功能 | 位置 | 实现方式 |
 |------|------|----------|
@@ -207,23 +242,29 @@ TestUI/
 | **主题颜色调节** | 顶部区域 | 使用 qfluentwidgets 的颜色选择器组件，支持预设主题和自定义颜色 |
 | **用户信息模块** | 左下角区域 | 使用 qfluentwidgets 的用户信息组件，显示用户名、头像和登录状态 |
 
-### 页面实现
+### 5.3 交互逻辑
+- 菜单点击触发页面切换
+- 主题调节实时更新界面样式
+- 搜索功能触发搜索逻辑
+- 用户信息展示与管理
 
+### 5.4 页面实现
 - 所有一级菜单对应页面显示"[页面名称]+开发中"，并介绍对应功能和子菜单内容
 - 所有二级菜单对应页面显示"[子菜单名称]+开发中"
 - 使用 qfluentwidgets 的页面组件实现统一的页面布局
 
-## 依赖注入实现
+## 6. 依赖注入实现
 
-### 依赖注入框架
-
+### 6.1 依赖注入框架
 使用 `dependency-injector` 框架实现依赖注入，为应用提供以下功能：
 
 - **单例模式**：为MQTT、Modbus-RTU、SQLite3等资源密集型服务提供单例模式创建上下文
 - **工厂模式**：为用户、测试用例等需要动态创建的对象提供工厂模式注入
 - **模块组织**：按功能模块组织依赖配置，提高代码可维护性
 
-### 核心容器结构
+### 6.2 依赖注入容器配置
+
+#### 核心容器结构
 
 ```python
 # infra/di/container.py
@@ -272,7 +313,57 @@ class Container(containers.DeclarativeContainer):
     test_case = TestCaseProvider()
 ```
 
-### 使用示例
+#### 提供者实现
+
+```python
+# infra/di/providers.py
+from dependency_injector import providers
+from app.service import ConfigService, ThemeService
+from app.service.mqtt_service import MQTTService
+from app.service.modbus_service import ModbusService
+from app.service.database_service import DatabaseService
+from app.service.user_service import UserService
+from app.model.test_case import TestCase
+
+class ConfigServiceProvider(providers.Singleton):
+    """配置服务提供者（单例）"""
+    def __init__(self):
+        super().__init__(ConfigService)
+
+class ThemeServiceProvider(providers.Singleton):
+    """主题服务提供者（单例）"""
+    def __init__(self, config_service):
+        super().__init__(ThemeService, config_service=config_service)
+
+class DatabaseServiceProvider(providers.Singleton):
+    """数据库服务提供者（单例）"""
+    def __init__(self, config_service):
+        super().__init__(DatabaseService, config_service=config_service)
+
+class MQTTServiceProvider(providers.Singleton):
+    """MQTT服务提供者（单例）"""
+    def __init__(self, config_service):
+        super().__init__(MQTTService, config_service=config_service)
+
+class ModbusServiceProvider(providers.Singleton):
+    """Modbus服务提供者（单例）"""
+    def __init__(self, config_service):
+        super().__init__(ModbusService, config_service=config_service)
+
+class UserServiceProvider(providers.Factory):
+    """用户服务提供者（工厂）"""
+    def __init__(self, database_service):
+        super().__init__(UserService, database_service=database_service)
+
+class TestCaseProvider(providers.Factory):
+    """测试用例提供者（工厂）"""
+    def __init__(self):
+        super().__init__(TestCase)
+```
+
+### 6.3 使用示例
+
+#### 在ViewModel中使用依赖注入
 
 ```python
 # app/viewmodel/main_viewmodel.py
@@ -291,17 +382,105 @@ class MainViewModel:
         # 初始化逻辑
 ```
 
-## 配置管理
+#### 在Service中使用依赖注入
 
-### YAML配置文件
+```python
+# app/service/mqtt_service.py
+class MQTTService:
+    """MQTT服务"""
+    
+    def __init__(self, config_service):
+        self.config_service = config_service
+        self.client = None
+        self._initialize()
+    
+    def _initialize(self):
+        # 初始化MQTT客户端
+        pass
+    
+    def publish(self, topic, message):
+        # 发布消息
+        pass
+```
 
-使用YAML配置文件管理应用配置，包括应用信息、主题设置、菜单配置等。
+### 6.4 后续扩展
 
-### 配置服务
+为后续规划的功能模块预留依赖注入配置：
 
-创建专用配置服务类 `ConfigService`，使用 `pyyaml` 库解析YAML文件，提供配置项的获取和更新方法。
+- **设备管理模块**：为不同类型的测试设备提供统一的依赖注入接口
+- **测试执行模块**：为测试流程和测试用例提供依赖注入支持
+- **报告生成模块**：为不同格式的报告生成器提供依赖注入支持
 
-## 技术栈
+## 7. 配置管理
+
+### 7.1 YAML配置文件结构
+
+```yaml
+# app_config.yml
+app:
+  name: "TestUI"
+  version: "1.0.0"
+
+theme:
+  default_color: "#1E88E5"
+  available_colors: ["#1E88E5", "#26A69A", "#FFA726", "#EF5350"]
+
+menu:
+  main_menu:
+    - name: "首页"
+      icon: "icon_home.svg"
+      route: "home"
+      position: "top"
+      description: "系统启动时的首页"
+    # 其他主菜单配置...
+  sub_menu:
+    home:
+      - name: "欢迎页面"
+        description: "系统启动时的首页"
+      # 其他子菜单配置...
+
+user:
+  default_name: "Admin"
+  default_avatar: "default_avatar.png"
+
+search:
+  placeholder: "搜索..."
+  max_results: 10
+```
+
+### 7.2 配置读取
+- 创建专用配置服务类 `ConfigService`
+- 使用 `pyyaml` 库解析YAML文件
+- 提供配置项的获取和更新方法
+
+## 8. 执行计划
+
+### 8.1 开发优先级
+1. **搭建基础架构**：创建MVVM目录结构，实现基础框架和依赖注入容器
+2. **实现菜单系统**：基于menu.md配置菜单和图标，使用qfluentwidgets组件
+3. **开发页面路由**：实现页面切换和路由管理，确保一级和二级菜单都有对应界面
+4. **添加扩展功能**：实现搜索框、主题调节、用户信息模块，使用qfluentwidgets组件
+5. **集成配置管理**：接入YAML配置文件
+6. **优化与测试**：完善功能，测试交互逻辑
+
+### 8.2 详细执行步骤
+
+| 步骤 | 任务 | 完成标准 |
+|------|------|----------|
+| 1 | 创建项目目录结构 | 目录结构符合架构设计，包含依赖注入相关目录和子页面目录 |
+| 2 | 配置依赖项 | 在requirements.txt中添加qfluentwidgets和dependency-injector等依赖 |
+| 3 | 实现依赖注入容器 | 创建DI容器，配置服务和组件的依赖关系，支持单例和工厂模式 |
+| 4 | 实现主窗口框架 | 参考examples/window示例，使用qfluentwidgets组件创建主窗口 |
+| 5 | 开发菜单组件 | 使用qfluentwidgets实现主菜单和子菜单，正确显示图标 |
+| 6 | 实现页面路由 | 菜单点击能切换对应页面，一级和二级菜单都有对应界面 |
+| 7 | 实现一级菜单页面 | 所有一级菜单页面显示功能介绍和子菜单内容列表 |
+| 8 | 实现二级菜单页面 | 所有二级菜单页面显示"[子菜单名称]+开发中"，使用qfluentwidgets组件 |
+| 9 | 添加扩展功能组件 | 搜索框、主题调节、用户信息模块正常工作，使用qfluentwidgets组件 |
+| 10 | 集成YAML配置 | 配置文件能够正确读取和应用 |
+| 11 | 实现ViewModel逻辑 | 组件间交互正常，逻辑清晰，使用依赖注入管理依赖 |
+| 12 | 测试与优化 | 功能完整，界面美观，交互流畅 |
+
+## 9. 技术栈
 
 | 技术/框架 | 版本 | 用途 |
 |-----------|------|------|
@@ -312,72 +491,37 @@ class MainViewModel:
 | dependency-injector | 4.41+ | 依赖注入库 |
 | QDarkStyle | 3.0+ | 主题支持（可选） |
 
-## 依赖管理
+## 10. 资源需求
 
-项目依赖在 `requirements.txt` 文件中定义，包括：
+### 10.1 图标资源
+- 主菜单图标：参考menu.md中指定的图标文件
+- 子菜单图标：部分需要补充
+- 功能图标：搜索、主题调节等功能需要的图标
 
-- PySide6>=6.4.2
-- PySideSix-Frameless-Window>=0.8.0
-- darkdetect
-- colorthief
-- scipy
-- pillow
-- dependency-injector>=4.41.0
+### 10.2 参考资源
+- examples/window 示例：窗口框架参考
+- res目录：图标和样式参考
+- menu.md：菜单结构参考
 
-## 运行项目
+## 11. 质量保证
 
-1. 安装依赖：
-   ```
-   pip install -r requirements.txt
-   ```
-
-2. 运行应用：
-   ```
-   python main.py
-   ```
-
-## 开发计划
-
-### 开发优先级
-
-1. **搭建基础架构**：创建MVVM目录结构，实现基础框架和依赖注入容器
-2. **实现菜单系统**：基于menu.md配置菜单和图标，使用qfluentwidgets组件
-3. **开发页面路由**：实现页面切换和路由管理，确保一级和二级菜单都有对应界面
-4. **添加扩展功能**：实现搜索框、主题调节、用户信息模块，使用qfluentwidgets组件
-5. **集成配置管理**：接入YAML配置文件
-6. **优化与测试**：完善功能，测试交互逻辑
-
-### 后续规划
-
-- 实现具体页面内容，替换"开发中"占位提示
-- 增加更多自定义主题选项
-- 实现用户登录和权限管理
-- 集成MQTT、Modbus-RTU、SQLite3等服务
-- 优化性能和用户体验
-- 添加更多功能模块
-
-## 质量保证
-
-### 代码规范
-
+### 11.1 代码规范
 - 遵循Python PEP8代码规范
 - 使用类型注解提高代码可读性
 - 编写清晰的文档和注释
 
-### 测试策略
-
+### 11.2 测试策略
 - 功能测试：验证所有功能正常工作
 - 界面测试：确保界面美观、交互流畅
 - 兼容性测试：确保在不同环境下正常运行
 
-### 性能优化
-
+### 11.3 性能优化
 - 合理使用PySide6的信号槽机制
 - 避免不必要的UI更新
 - 优化配置文件读取性能
 - 合理使用依赖注入，避免过度依赖
 
-## 风险与应对
+## 12. 风险与应对
 
 | 风险 | 影响 | 应对措施 |
 |------|------|----------|
@@ -387,7 +531,7 @@ class MainViewModel:
 | 主题调节兼容性 | 部分组件样式异常 | 全面测试主题切换效果，确保所有组件兼容 |
 | 依赖注入过度使用 | 代码复杂度增加 | 合理使用依赖注入，避免过度设计 |
 
-## 交付标准
+## 13. 交付标准
 
 - 完整的MVVM架构实现
 - 所有菜单和子菜单正确显示
@@ -399,3 +543,12 @@ class MainViewModel:
 - 依赖注入容器实现，支持单例和工厂模式
 - 代码结构清晰，符合规范
 - 界面美观，交互流畅
+
+## 14. 后续规划
+
+- 实现具体页面内容，替换"开发中"占位提示
+- 增加更多自定义主题选项
+- 实现用户登录和权限管理
+- 集成MQTT、Modbus-RTU、SQLite3等服务
+- 优化性能和用户体验
+- 添加更多功能模块

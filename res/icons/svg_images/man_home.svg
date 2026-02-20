@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="100" cy="100" r="95" fill="#4CAF50" stroke="#388E3C" stroke-width="2"/>
+  
+  <!-- 房屋主体 -->
+  <polygon points="100,40 160,100 160,160 40,160 40,100" fill="#FF9800" stroke="#F57C00" stroke-width="2"/>
+  
+  <!-- 屋顶 -->
+  <polygon points="100,40 170,100 30,100" fill="#F44336" stroke="#D32F2F" stroke-width="2"/>
+  
+  <!-- 门 -->
+  <rect x="85" y="120" width="30" height="40" fill="#795548" stroke="#5D4037" stroke-width="1"/>
+  <circle cx="105" cy="140" r="2" fill="#FFEB3B"/>
+  
+  <!-- 窗户 -->
+  <rect x="55" y="110" width="20" height="20" fill="#2196F3" stroke="#1976D2" stroke-width="1"/>
+  <rect x="125" y="110" width="20" height="20" fill="#2196F3" stroke="#1976D2" stroke-width="1"/>
+  
+  <!-- 文字 -->
+  <text x="100" y="185" font-family="Arial" font-size="16" font-weight="bold" fill="white" text-anchor="middle">MANBA</text>
+</svg>

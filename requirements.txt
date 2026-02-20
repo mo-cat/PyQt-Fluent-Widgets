@@ -4,3 +4,4 @@ darkdetect
 colorthief
 scipy
 pillow
+dependency-injector>=4.41.0

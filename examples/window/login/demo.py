@@ -32,9 +32,10 @@ class LoginWindow(FluentWidget, Ui_Form):
 
     def resizeEvent(self, e):
         super().resizeEvent(e)
-        pixmap = QPixmap(":/images/background.jpg").scaled(
-            self.label.size(), Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
-        self.label.setPixmap(pixmap)
+        if hasattr(self, 'label'):
+            pixmap = QPixmap(":/images/background.jpg").scaled(
+                self.label.size(), Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+            self.label.setPixmap(pixmap)
 
 
 if __name__ == '__main__':
